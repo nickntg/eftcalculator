@@ -1,0 +1,6 @@
+﻿EFTCalculator Release History
+=============================
+
+2011/01/09: Version 0.1.0 beta released.
+----------------------------------------
+* Initial implementation with a DES calculator.
