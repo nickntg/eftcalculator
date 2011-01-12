@@ -8,7 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E83EEC9-1CF2-43C5-8628-B43FD6CA7320}"
 	ProjectSection(SolutionItems) = preProject
 		EFTCalculator.vsmdi = EFTCalculator.vsmdi
+		GPL.txt = GPL.txt
 		Local.testsettings = Local.testsettings
+		ReleaseHistory.txt = ReleaseHistory.txt
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
