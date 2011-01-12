@@ -80,6 +80,7 @@
     <Compile Include="HexUnitTests.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="ParityUnitTests.vb" />
+    <Compile Include="StorageUnitTests.vb" />
     <Compile Include="TripleDESUnitTests.vb" />
   </ItemGroup>
   <ItemGroup>

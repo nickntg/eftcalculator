@@ -1,7 +1,38 @@
-﻿Public Class HexTextBox
+﻿''
+'' This program is free software; you can redistribute it and/or modify
+'' it under the terms of the GNU General Public License as published by
+'' the Free Software Foundation; either version 2 of the License, or
+'' (at your option) any later version.
+''
+'' This program is distributed in the hope that it will be useful,
+'' but WITHOUT ANY WARRANTY; without even the implied warranty of
+'' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'' GNU General Public License for more details.
+''
+'' You should have received a copy of the GNU General Public License
+'' along with this program; if not, write to the Free Software
+'' Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'' 
 
+''' <summary>
+''' This control is used to hold 16 hexadecimal values.
+''' </summary>
+''' <remarks></remarks>
+Public Class HexTextBox
+
+    ''' <summary>
+    ''' Fired when the text box is full.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <remarks></remarks>
     Public Event Completed(ByVal sender As Object)
 
+    ''' <summary>
+    ''' Get/set the text value of the control.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Overrides Property Text() As String
         Get
             Return txt.Text
@@ -11,10 +42,12 @@
         End Set
     End Property
 
+    'When we get the focus anew, we select everything.
     Private Sub txt_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt.GotFocus
         txt.SelectAll()
     End Sub
 
+    'Depending on the key pressed, ignore some, accept valid characters and capitalize them.
     Private Sub txt_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt.KeyPress
         If Char.IsControl(e.KeyChar) Then Exit Sub
 

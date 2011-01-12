@@ -19,6 +19,33 @@ Imports EFTCalculator.Core.Cryptography
 
 Public Class frmMain
 
+    'Read keys and add to list view.
+    Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        KeyStore.ReadKeys()
+
+        For Each key As String In KeyStore.GetKeys.Keys
+            Dim SK As StoredKey = KeyStore.GetKey(key)
+            AddKeyToLV(SK)
+        Next
+    End Sub
+
+    Private Sub AddKeyToLV(ByVal SK As StoredKey)
+        Dim itmX As New ListViewItem(SK.KeyName)
+        itmX.SubItems.Add(SK.KeyValue)
+        itmX.SubItems.Add(SK.KeyComment)
+        itmX.Tag = SK
+        LVKeys.Items.Add(itmX)
+    End Sub
+
+    Private Sub RemoveKeyFromLV(ByVal SK As StoredKey)
+        For Each itmX As ListViewItem In LVKeys.Items
+            If itmX.SubItems(0).Text = SK.KeyName Then
+                LVKeys.Items.Remove(itmX)
+                Exit Sub
+            End If
+        Next
+    End Sub
+
 #Region "DES/3DES"
 
     'DES encrypt.
@@ -114,6 +141,95 @@ Public Class frmMain
         End If
         Return False
     End Function
+
+#End Region
+
+#Region "Key management"
+
+    'Show keys as they are selected.
+    Private Sub LVKeys_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LVKeys.SelectedIndexChanged
+        If LVKeys.SelectedItems.Count = 0 Then
+            txtKeyName.Text = ""
+            txtKeyValue.Clear()
+            txtKeyDescription.Text = ""
+        Else
+            txtKeyName.Text = LVKeys.SelectedItems(0).SubItems(0).Text
+            txtKeyValue.Text = LVKeys.SelectedItems(0).SubItems(1).Text
+            txtKeyDescription.Text = LVKeys.SelectedItems(0).SubItems(2).Text
+        End If
+    End Sub
+
+    'Add/update a key.
+    Private Sub cmdAddUpdateKey_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAddUpdateKey.Click
+        If txtKeyName.Text = "" Then
+            MessageBox.Show(Me, "Enter a unique key name.", "No key name", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtKeyName.Focus()
+            Exit Sub
+        End If
+
+        If Not txtKeyValue.IsValid Then
+            Exit Sub
+        End If
+
+        Dim SK As New StoredKey(txtKeyName.Text, txtKeyValue.Text, txtKeyDescription.Text)
+        Dim alreadyExists As Boolean = False
+
+        If KeyStore.KeyExists(SK.KeyName) Then
+            alreadyExists = True
+            KeyStore.UpdateKey(SK)
+        Else
+            KeyStore.AddKey(SK)
+        End If
+
+        Try
+            KeyStore.WriteKeys()
+        Catch ex As Exception
+            MessageBox.Show(Me, "There was an error writing the keys to the disk." + vbCrLf + ex.ToString(), "I/O error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End Try
+
+        If alreadyExists Then
+            RemoveKeyFromLV(SK)
+        End If
+
+        AddKeyToLV(SK)
+    End Sub
+
+    Private Sub cmdDeleteKey_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdDeleteKey.Click
+        If txtKeyName.Text = "" Then
+            MessageBox.Show(Me, "Click on a key, then click on the DELETE button.", "No key selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            LVKeys.Focus()
+            Exit Sub
+        End If
+
+        If KeyStore.KeyExists(txtKeyName.Text) Then
+            Dim SK As StoredKey = KeyStore.GetKey(txtKeyName.Text)
+
+            KeyStore.RemoveKey(txtKeyName.Text)
+
+            Try
+                KeyStore.WriteKeys()
+            Catch ex As Exception
+                MessageBox.Show(Me, "There was an error writing the keys to the disk." + vbCrLf + ex.ToString(), "I/O error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+            RemoveKeyFromLV(SK)
+        End If
+    End Sub
+
+    Private Sub cmdClearAllKeys_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearAllKeys.Click
+        If MessageBox.Show(Me, "Remove all keys?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbNo Then Exit Sub
+
+        KeyStore.Clear()
+
+        Try
+            KeyStore.WriteKeys()
+        Catch ex As Exception
+            MessageBox.Show(Me, "There was an error writing the keys to the disk." + vbCrLf + ex.ToString(), "I/O error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        LVKeys.Items.Clear()
+    End Sub
 
 #End Region
 

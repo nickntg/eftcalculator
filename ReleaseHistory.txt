@@ -1,6 +1,10 @@
 ﻿EFTCalculator Release History
 =============================
 
+xxxx/xx/xx: Version 0.2.0 beta released.
+----------------------------------------
+* Added key management capabilities.
+
 2011/01/09: Version 0.1.0 beta released.
 ----------------------------------------
 * Initial implementation with a DES calculator.
