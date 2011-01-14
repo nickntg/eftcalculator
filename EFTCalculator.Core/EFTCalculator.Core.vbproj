@@ -91,6 +91,9 @@
     <Compile Include="Utility\Cryptography\DES\TripleDES.vb" />
     <Compile Include="Utility\Cryptography\HexKey.vb" />
     <Compile Include="Utility\Cryptography\KeyLength.vb" />
+    <Compile Include="Utility\PIN\PinBlock.vb" />
+    <Compile Include="Utility\PIN\PinBlockFormat.vb" />
+    <Compile Include="Utility\PIN\PinBlockRequirements.vb" />
     <Compile Include="Utility\Utility.vb" />
     <Compile Include="Utility\Parity\Parity.vb" />
   </ItemGroup>

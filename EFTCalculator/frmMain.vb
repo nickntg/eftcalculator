@@ -21,6 +21,17 @@ Public Class frmMain
 
     'Read keys and add to list view.
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        lnkHome.Links.Add(0, lnkHome.Text.Length, "http://eftcalculator.codeplex.com/")
+
+        txtPINKey.ShowLoadKey = True
+        txtPINKey.ShowGenerateKey = True
+        DESHexData.ShowLoadKey = True
+        DESHexData.ShowGenerateKey = True
+        DESHexKey.ShowLoadKey = True
+        DESHexKey.ShowGenerateKey = True
+        DESResult.ShowLoadKey = False
+        DESResult.ShowGenerateKey = False
+
         KeyStore.ReadKeys()
 
         For Each key As String In KeyStore.GetKeys.Keys
@@ -29,6 +40,7 @@ Public Class frmMain
         Next
     End Sub
 
+    'Add a key to the list view.
     Private Sub AddKeyToLV(ByVal SK As StoredKey)
         Dim itmX As New ListViewItem(SK.KeyName)
         itmX.SubItems.Add(SK.KeyValue)
@@ -37,6 +49,7 @@ Public Class frmMain
         LVKeys.Items.Add(itmX)
     End Sub
 
+    'Remove a key from the list view.
     Private Sub RemoveKeyFromLV(ByVal SK As StoredKey)
         For Each itmX As ListViewItem In LVKeys.Items
             If itmX.SubItems(0).Text = SK.KeyName Then
@@ -44,6 +57,11 @@ Public Class frmMain
                 Exit Sub
             End If
         Next
+    End Sub
+
+    'Go to home site.
+    Private Sub lnkHome_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkHome.LinkClicked
+        System.Diagnostics.Process.Start(e.Link.LinkData.ToString)
     End Sub
 
 #Region "DES/3DES"
@@ -230,6 +248,128 @@ Public Class frmMain
 
         LVKeys.Items.Clear()
     End Sub
+
+#End Region
+
+#Region "Check digit"
+
+    'Check digit calculation/verification.
+    Private Sub cmdCheckDigit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCheckDigit.Click
+        If txtPANtoCheck.Text.Length < 2 Then
+            MessageBox.Show(Me, "Enter a PAN", "No PAN", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtPANtoCheck.Focus()
+            Exit Sub
+        End If
+
+        If optPANWithCheckDigit.Checked Then
+            Dim result As String = Utility.LuhnCheck(txtPANtoCheck.Text)
+            If result = txtPANtoCheck.Text.Substring(txtPANtoCheck.Text.Length - 1, 1) Then
+                lblCheckDigitResult.Text = "Check digit is correct"
+                lblCheckDigitResult.ForeColor = Color.Green
+            Else
+                lblCheckDigitResult.Text = "Check digit is incorrect, should be " + result
+                lblCheckDigitResult.ForeColor = Color.Red
+            End If
+        Else
+            Dim result As String = Utility.LuhnCheck(txtPANtoCheck.Text + "0")
+            lblCheckDigitResult.Text = "Calculated check digit: " + result
+            lblCheckDigitResult.ForeColor = Color.Black
+        End If
+    End Sub
+
+#End Region
+
+#Region "PIN block"
+
+    'Find PIN block requirements on format selection change.
+    Private Sub cboPBFormat_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPBFormat.SelectedIndexChanged
+        If cboPBFormat.SelectedIndex = -1 Then
+            txtAccount.Enabled = False
+            txtPadding.Enabled = False
+        Else
+            Dim PBF As PIN.PinBlockFormat = GetPBFormat()
+            Dim reqs As PIN.PinBlockRequirements = PIN.PinBlock.GetPINBlockRequirements(PBF)
+            txtAccount.Enabled = reqs.RequiresAccount
+            txtPadding.Enabled = reqs.RequiresPadding
+        End If
+    End Sub
+
+    'Calculate clear and encrypted PIN blocks.
+    Private Sub cmdGetPINBlock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdGetPINBlock.Click
+        If txtPIN.Text = "" Then
+            MessageBox.Show(Me, "Enter a PIN number", "No PIN", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtPIN.Focus()
+            Exit Sub
+        End If
+
+        If Not IsOtherPINBlockDataValid() Then Exit Sub
+
+        Dim clearPB As String = ""
+
+        Try
+            clearPB = PIN.PinBlock.ToPINBlock(GetPBFormat, txtPIN.Text, txtPadding.Text, txtAccount.Text)
+        Catch ex As Exception
+            MessageBox.Show(Me, "Error calculating clear PIN block." + vbCrLf + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End Try
+
+        Dim cryptPB As String = TripleDES.TripleDESEncrypt(txtPINKey.GetKey, clearPB)
+        txtPINBlock.Text = cryptPB
+
+        lblPINBlockResult.Text = "Clear PIN Block: " + clearPB + vbCrLf + "Encrypted PIN Block: " + cryptPB
+    End Sub
+
+    'Find clear PIN from PIN block.
+    Private Sub cmdGetPIN_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdGetPIN.Click
+        If txtPINBlock.Text.Length <> 16 Then
+            MessageBox.Show(Me, "Enter a valid PIN block", "No PIN block", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtPINBlock.Focus()
+            Exit Sub
+        End If
+
+        If Not IsOtherPINBlockDataValid() Then Exit Sub
+
+        Dim clearPB As String = TripleDES.TripleDESDecrypt(txtPINKey.GetKey, txtPINBlock.Text)
+        Dim clearPIN As String = ""
+
+        Try
+            clearPIN = PIN.PinBlock.ToPIN(GetPBFormat, clearPB, txtPadding.Text, txtAccount.Text)
+        Catch ex As Exception
+            MessageBox.Show(Me, "Error finding PIN. This may indicate an incorrect PIN block or PIN key." + vbCrLf + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End Try
+
+        txtPIN.Text = clearPIN
+        lblPINBlockResult.Text = "Clear PIN: " + clearPIN
+    End Sub
+
+    'Get the PIN block format from the combo.
+    Private Function GetPBFormat() As PIN.PinBlockFormat
+        Return CType(cboPBFormat.SelectedIndex, PIN.PinBlockFormat)
+    End Function
+
+    'Validate PIN block data.
+    Private Function IsOtherPINBlockDataValid() As Boolean
+        If txtAccount.Enabled AndAlso txtAccount.Text = "" Then
+            MessageBox.Show(Me, "Enter an account number", "No account", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtAccount.Focus()
+            Return False
+        End If
+
+        If txtPadding.Enabled AndAlso txtPadding.Text = "" Then
+            MessageBox.Show(Me, "Enter a padding string", "No padding", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            txtPadding.Focus()
+            Return False
+        End If
+
+        If cboPBFormat.SelectedIndex = -1 Then
+            MessageBox.Show(Me, "Select a PIN block format", "No PIN block format", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            cboPBFormat.Focus()
+            Return False
+        End If
+
+        Return txtPINKey.IsValid
+    End Function
 
 #End Region
 

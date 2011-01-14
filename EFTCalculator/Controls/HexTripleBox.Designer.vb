@@ -48,7 +48,7 @@ Partial Class HexTripleBox
         Me.cmdRandomKey.BackgroundImage = CType(resources.GetObject("cmdRandomKey.BackgroundImage"), System.Drawing.Image)
         Me.cmdRandomKey.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.cmdRandomKey.ContextMenuStrip = Me.btnMenu
-        Me.cmdRandomKey.Location = New System.Drawing.Point(501, 3)
+        Me.cmdRandomKey.Location = New System.Drawing.Point(501, 1)
         Me.cmdRandomKey.Name = "cmdRandomKey"
         Me.cmdRandomKey.Size = New System.Drawing.Size(29, 23)
         Me.cmdRandomKey.TabIndex = 3
@@ -83,7 +83,7 @@ Partial Class HexTripleBox
         Me.cmdLoadKey.BackgroundImage = CType(resources.GetObject("cmdLoadKey.BackgroundImage"), System.Drawing.Image)
         Me.cmdLoadKey.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.cmdLoadKey.ContextMenuStrip = Me.keysMenuStrip
-        Me.cmdLoadKey.Location = New System.Drawing.Point(536, 3)
+        Me.cmdLoadKey.Location = New System.Drawing.Point(536, 1)
         Me.cmdLoadKey.Name = "cmdLoadKey"
         Me.cmdLoadKey.Size = New System.Drawing.Size(29, 23)
         Me.cmdLoadKey.TabIndex = 5
@@ -96,24 +96,33 @@ Partial Class HexTripleBox
         '
         'txt3
         '
+        Me.txt3.AcceptHex = True
         Me.txt3.Location = New System.Drawing.Point(324, 3)
+        Me.txt3.MaxLength = 16
         Me.txt3.Name = "txt3"
         Me.txt3.Size = New System.Drawing.Size(155, 21)
         Me.txt3.TabIndex = 2
+        Me.txt3.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txt2
         '
+        Me.txt2.AcceptHex = True
         Me.txt2.Location = New System.Drawing.Point(163, 3)
+        Me.txt2.MaxLength = 16
         Me.txt2.Name = "txt2"
         Me.txt2.Size = New System.Drawing.Size(155, 21)
         Me.txt2.TabIndex = 1
+        Me.txt2.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txt1
         '
+        Me.txt1.AcceptHex = True
         Me.txt1.Location = New System.Drawing.Point(0, 3)
+        Me.txt1.MaxLength = 16
         Me.txt1.Name = "txt1"
         Me.txt1.Size = New System.Drawing.Size(155, 21)
         Me.txt1.TabIndex = 0
+        Me.txt1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center
         '
         'HexTripleBox
         '
