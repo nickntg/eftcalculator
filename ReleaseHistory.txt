@@ -1,9 +1,11 @@
 ﻿EFTCalculator Release History
 =============================
 
-xxxx/xx/xx: Version 0.2.0 beta released.
+2011/01/15: Version 0.2.0 beta released.
 ----------------------------------------
 * Added key management capabilities.
+* Added check digit calculation & verification.
+* Added PIN block & PIN calculation.
 
 2011/01/09: Version 0.1.0 beta released.
 ----------------------------------------

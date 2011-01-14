@@ -15,7 +15,7 @@
 '' 
 
 ''' <summary>
-''' This control is used to hold 16 hexadecimal values.
+''' This control is used to hold hexadecimal or numeric values.
 ''' </summary>
 ''' <remarks></remarks>
 Public Class HexTextBox
@@ -26,6 +26,44 @@ Public Class HexTextBox
     ''' <param name="sender"></param>
     ''' <remarks></remarks>
     Public Event Completed(ByVal sender As Object)
+
+    ''' <summary>
+    ''' Get/set the max length of the text box.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property MaxLength As Integer
+        Get
+            Return txt.MaxLength
+        End Get
+        Set(ByVal value As Integer)
+            txt.MaxLength = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Get/set the text horizontal alignment.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property TextAlignment As HorizontalAlignment
+        Get
+            Return txt.TextAlign
+        End Get
+        Set(ByVal value As HorizontalAlignment)
+            txt.TextAlign = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Get/set whether we accept hex characters.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property AcceptHex As Boolean = True
 
     ''' <summary>
     ''' Get/set the text value of the control.
@@ -53,10 +91,11 @@ Public Class HexTextBox
 
         If Char.IsLetterOrDigit(e.KeyChar) OrElse Char.IsPunctuation(e.KeyChar) OrElse Char.IsSymbol(e.KeyChar) OrElse Char.IsWhiteSpace(e.KeyChar) OrElse Char.IsSeparator(e.KeyChar) Then
             Dim ch As Char = Char.ToUpper(e.KeyChar)
-            If EFTCalculator.Core.Utility.IsHex(ch) Then
+
+            If (Not AcceptHex AndAlso Char.IsNumber(ch)) OrElse (AcceptHex AndAlso EFTCalculator.Core.Utility.IsHex(ch)) Then
                 If txt.Text.Length < txt.MaxLength Then
                     txt.AppendText(ch)
-                    If txt.Text.Length = 16 Then
+                    If txt.Text.Length = txt.MaxLength Then
                         RaiseEvent Completed(Me)
                     End If
                 End If

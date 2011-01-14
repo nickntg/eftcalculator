@@ -68,6 +68,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -92,6 +105,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -126,7 +152,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EFTCalculator.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=e334fefa5e1b174f, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:EFTCalculator.Core, Version=0.2.0.0, Culture=neutral, PublicKeyToken=e334fefa5e1b174f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_A0527B282E2002B6F8D45371FF073E55"
@@ -230,7 +256,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFT Calculator"
         "ProductCode" = "8:{C7211638-D135-402C-BE58-BEE0E33D555F}"
-        "PackageCode" = "8:{2B30A3E6-6C8D-422E-A50B-5D004445D09F}"
+        "PackageCode" = "8:{84DC0144-06FE-4881-ADCA-91E2C94912AC}"
         "UpgradeCode" = "8:{E443DF11-656E-48F9-AD16-DC4933E3E017}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -352,7 +378,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6BC081DA054B4DF58E6C48D78AEA68E2"
             {
-            "Name" = "8:Shortcut to EFT Calculator"
+            "Name" = "8:EFT Calculator"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

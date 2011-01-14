@@ -39,6 +39,20 @@ Public Class HexTripleBox
         End Set
     End Property
 
+    ''' <summary>
+    ''' Determines whether the random key command is available.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property ShowGenerateKey As Boolean
+        Get
+            Return cmdRandomKey.Visible
+        End Get
+        Set(ByVal value As Boolean)
+            cmdRandomKey.Visible = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' Get/set the text value of this control.

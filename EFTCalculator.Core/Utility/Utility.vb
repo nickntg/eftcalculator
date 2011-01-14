@@ -269,6 +269,30 @@ Public Class Utility
         End Select
     End Function
 
+    ''' <summary>
+    ''' This method implements the Luhn (MOD-10) check.
+    ''' </summary>
+    ''' <param name="cardNumber"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function LuhnCheck(ByVal cardNumber As String) As String
+        Dim total As Integer = 0, power As Integer = 2
+
+        For i As Integer = cardNumber.Length - 2 To 0 Step -1
+            Dim res As Integer = Convert.ToInt32(cardNumber.Substring(i, 1)) * power
+            If res >= 10 Then res -= 9
+            total += res
+            power = power Xor 3
+        Next
+
+        total = 10 - (total Mod 10)
+        If total <> 10 Then
+            Return total.ToString
+        Else
+            Return "0"
+        End If
+    End Function
+
     Private Shared rndMachine As Random = New Random
 
     Private Shared Function SingleLengthRandomKey(ByVal Parity As Parity) As String

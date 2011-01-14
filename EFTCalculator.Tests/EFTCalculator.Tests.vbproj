@@ -78,8 +78,10 @@
     <Compile Include="ConversionUnitTests.vb" />
     <Compile Include="DESUnitTests.vb" />
     <Compile Include="HexUnitTests.vb" />
+    <Compile Include="LuhnCheckUnitTests.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="ParityUnitTests.vb" />
+    <Compile Include="PINBlockUnitTests.vb" />
     <Compile Include="StorageUnitTests.vb" />
     <Compile Include="TripleDESUnitTests.vb" />
   </ItemGroup>
