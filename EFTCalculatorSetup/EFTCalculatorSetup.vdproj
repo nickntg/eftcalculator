@@ -155,11 +155,6 @@
             "AssemblyAsmDisplayName" = "8:EFTCalculator.Core, Version=0.2.0.0, Culture=neutral, PublicKeyToken=e334fefa5e1b174f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A0527B282E2002B6F8D45371FF073E55"
-                    {
-                    "Name" = "8:EFTCalculator.Core.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:EFTCalculator.Core.dll"
             "TargetName" = "8:"
@@ -255,15 +250,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFT Calculator"
-        "ProductCode" = "8:{C7211638-D135-402C-BE58-BEE0E33D555F}"
-        "PackageCode" = "8:{84DC0144-06FE-4881-ADCA-91E2C94912AC}"
+        "ProductCode" = "8:{68AF66B4-9319-4402-8AC2-A3F66A2CAA9C}"
+        "PackageCode" = "8:{5502BB35-E127-46BF-9FB7-555B272C1A36}"
         "UpgradeCode" = "8:{E443DF11-656E-48F9-AD16-DC4933E3E017}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.2.0"
+        "ProductVersion" = "8:0.3.0"
         "Manufacturer" = "8:NTG"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://eftcalculator.codeplex.com/"

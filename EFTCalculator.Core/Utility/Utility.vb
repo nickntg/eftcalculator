@@ -14,6 +14,8 @@
 '' Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '' 
 
+Imports EFTCalculator.Core.Cryptography
+
 ''' <summary>
 ''' Utility class that implements common operations.
 ''' </summary>
@@ -291,6 +293,84 @@ Public Class Utility
         Else
             Return "0"
         End If
+    End Function
+
+    ''' <summary>
+    ''' Calculates a Visa PVV.
+    ''' </summary>
+    ''' <param name="AccountNumber"></param>
+    ''' <param name="PVKI"></param>
+    ''' <param name="PIN"></param>
+    ''' <param name="PVKPair"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function GeneratePVV(ByVal AccountNumber As String, ByVal PVKI As String, ByVal PIN As String, ByVal PVKPair As HexKey) As String
+
+        Dim stage1 As String = GetProperAccountDigits(AccountNumber).Substring(0, 11) + PVKI + PIN.Substring(0, 4)
+        Dim stage2 As String = TripleDES.TripleDESEncrypt(PVKPair, stage1)
+        Dim PVV As String = "", i As Integer
+
+        While PVV.Length < 4
+            i = 0
+            While PVV.Length < 4 AndAlso i < stage2.Length
+                If Char.IsDigit(stage2.Chars(i)) Then PVV += stage2.Substring(i, 1)
+                i += 1
+            End While
+            If PVV.Length < 4 Then
+                For j As Integer = 0 To stage2.Length - 1
+                    Dim newChar As String = " "
+                    If Char.IsDigit(stage2.Chars(j)) = False Then
+                        newChar = (Convert.ToInt32(stage2.Substring(j, 1), 16) - 10).ToString("X")
+                    End If
+                    stage2 = stage2.Remove(j, 1)
+                    stage2 = stage2.Insert(j, newChar)
+                Next
+                stage2 = stage2.Replace(" ", "")
+            End If
+        End While
+
+        Return PVV
+    End Function
+
+    ''' <summary>
+    ''' Calculates a CVV.
+    ''' </summary>
+    ''' <param name="CVKPair"></param>
+    ''' <param name="AccountNumber"></param>
+    ''' <param name="ExpirationDate"></param>
+    ''' <param name="SVC"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function GenerateCVV(ByVal CVKPair As HexKey, ByVal AccountNumber As String, ByVal ExpirationDate As String, ByVal SVC As String) As String
+        Dim CVKA As String = CVKPair.PartA
+        Dim CVKB As String = CVKPair.PartB
+        Dim block As String = (AccountNumber + ExpirationDate + SVC).PadRight(32, "0"c)
+        Dim blockA As String = block.Substring(0, 16)
+        Dim blockB As String = block.Substring(16)
+
+        Dim result As String = TripleDES.TripleDESEncrypt(New HexKey(CVKA), blockA)
+        result = XORHex(result, blockB)
+        result = TripleDES.TripleDESEncrypt(New HexKey(CVKA + CVKB), result)
+
+        Dim CVV As String = "", i As Integer = 0
+        While CVV.Length < 3
+            If Char.IsDigit(result.Chars(i)) Then
+                CVV += result.Substring(i, 1)
+            End If
+            i += 1
+        End While
+
+        Return CVV
+    End Function
+
+    ''' <summary>
+    ''' Return last 12 PAN digits, excluding the check digit.
+    ''' </summary>
+    ''' <param name="account"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function GetProperAccountDigits(ByVal account As String) As String
+        Return account.Substring(account.Length - 12 - 1, 12)
     End Function
 
     Private Shared rndMachine As Random = New Random
