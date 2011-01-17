@@ -129,7 +129,7 @@ Namespace PIN
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Shared Function FormatPINBlock_AnsiX98(ByVal PIN As String, ByVal Account As String) As String
-            Return Utility.XORHex((PIN.Length.ToString.PadLeft(2, "0"c) + PIN).PadRight(16, "F"c), GetProperAccountDigits(Account).PadLeft(16, "0"c))
+            Return Utility.XORHex((PIN.Length.ToString.PadLeft(2, "0"c) + PIN).PadRight(16, "F"c), Utility.GetProperAccountDigits(Account).PadLeft(16, "0"c))
         End Function
 
         ''' <summary>
@@ -140,7 +140,7 @@ Namespace PIN
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Shared Function GetPIN_AnsiX98(ByVal PINBlock As String, ByVal Account As String) As String
-            Dim unXor As String = Utility.XORHex(PINBlock, GetProperAccountDigits(Account).PadLeft(16, "0"c))
+            Dim unXor As String = Utility.XORHex(PINBlock, Utility.GetProperAccountDigits(Account).PadLeft(16, "0"c))
             Return unXor.Substring(2, Convert.ToInt32(unXor.Substring(0, 2)))
         End Function
 
@@ -270,7 +270,7 @@ Namespace PIN
         Private Shared Function FormatPINBlock_ISO3(ByVal PIN As String, ByVal Account As String) As String
             Dim PINChars As String = "3" + PIN.Length.ToString + PIN
             Dim RandomChars As String = Utility.CreateRandomKey(Cryptography.KeyLength.SingleLength)
-            Return Utility.XORHex(PINChars + RandomChars.Substring(0, 16 - PINChars.Length), GetProperAccountDigits(Account).PadLeft(16, "0"c))
+            Return Utility.XORHex(PINChars + RandomChars.Substring(0, 16 - PINChars.Length), Utility.GetProperAccountDigits(Account).PadLeft(16, "0"c))
         End Function
 
         ''' <summary>
@@ -281,7 +281,7 @@ Namespace PIN
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Shared Function GetPIN_ISO3(ByVal PINBlock As String, ByVal Account As String) As String
-            Dim unXor As String = Utility.XORHex(PINBlock, GetProperAccountDigits(Account).PadLeft(16, "0"c))
+            Dim unXor As String = Utility.XORHex(PINBlock, Utility.GetProperAccountDigits(Account).PadLeft(16, "0"c))
             Return unXor.Substring(2, Convert.ToInt32(unXor.Substring(1, 1)))
         End Function
 
@@ -307,10 +307,6 @@ Namespace PIN
         Private Shared Function GetPIN_Plus(ByVal PINBlock As String, ByVal Account As String) As String
             Dim unXor As String = Utility.XORHex(PINBlock, "0000" + Account.Substring(0, 12))
             Return unXor.Substring(2, Convert.ToInt32(unXor.Substring(1, 1)))
-        End Function
-
-        Private Shared Function GetProperAccountDigits(ByVal account As String) As String
-            Return account.Substring(account.Length - 12 - 1, 12)
         End Function
 
     End Class

@@ -46,19 +46,31 @@ Partial Class frmMain
         Me.cmdGetPIN = New System.Windows.Forms.Button()
         Me.cmdGetPINBlock = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.txtPINKey = New EFTCalculator.HexTripleBox()
         Me.cboPBFormat = New System.Windows.Forms.ComboBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.txtPadding = New EFTCalculator.HexTextBox()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.txtAccount = New EFTCalculator.HexTextBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.txtPINBlock = New EFTCalculator.HexTextBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.txtPIN = New EFTCalculator.HexTextBox()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtPINKey = New EFTCalculator.HexTripleBox()
+        Me.txtPadding = New EFTCalculator.HexTextBox()
+        Me.txtAccount = New EFTCalculator.HexTextBox()
+        Me.txtPINBlock = New EFTCalculator.HexTextBox()
+        Me.txtPIN = New EFTCalculator.HexTextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.barPVVClashing = New System.Windows.Forms.ProgressBar()
+        Me.lblPVV = New System.Windows.Forms.Label()
+        Me.cmdFindOtherPINs = New System.Windows.Forms.Button()
+        Me.cmdGeneratePVV = New System.Windows.Forms.Button()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.cboPVKI = New System.Windows.Forms.ComboBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txtPVVPVK = New EFTCalculator.HexTripleBox()
+        Me.txtPVVAccount = New EFTCalculator.HexTextBox()
+        Me.txtPVVPIN = New EFTCalculator.HexTextBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.optPANWithoutCheckDigit = New System.Windows.Forms.RadioButton()
         Me.optPANWithCheckDigit = New System.Windows.Forms.RadioButton()
@@ -83,9 +95,22 @@ Partial Class frmMain
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.lnkHome = New System.Windows.Forms.LinkLabel()
         Me.Label14 = New System.Windows.Forms.Label()
+        Me.BW = New System.ComponentModel.BackgroundWorker()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.txtCVKPair = New EFTCalculator.HexTripleBox()
+        Me.txtCVVAccount = New EFTCalculator.HexTextBox()
+        Me.txtCVVSVC = New EFTCalculator.HexTextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.txtCVVExpDate = New EFTCalculator.HexTextBox()
+        Me.lblCVV = New System.Windows.Forms.Label()
+        Me.cmdGenerateCVV = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage7.SuspendLayout()
@@ -138,7 +163,7 @@ Partial Class frmMain
         Me.cmdEvenParity.Location = New System.Drawing.Point(332, 184)
         Me.cmdEvenParity.Name = "cmdEvenParity"
         Me.cmdEvenParity.Size = New System.Drawing.Size(93, 30)
-        Me.cmdEvenParity.TabIndex = 16
+        Me.cmdEvenParity.TabIndex = 9
         Me.cmdEvenParity.Text = "Even Parity"
         Me.cmdEvenParity.UseVisualStyleBackColor = True
         '
@@ -147,7 +172,7 @@ Partial Class frmMain
         Me.cmdOddParity.Location = New System.Drawing.Point(233, 184)
         Me.cmdOddParity.Name = "cmdOddParity"
         Me.cmdOddParity.Size = New System.Drawing.Size(93, 30)
-        Me.cmdOddParity.TabIndex = 15
+        Me.cmdOddParity.TabIndex = 8
         Me.cmdOddParity.Text = "Odd Parity"
         Me.cmdOddParity.UseVisualStyleBackColor = True
         '
@@ -189,16 +214,17 @@ Partial Class frmMain
         '
         Me.DESResult.Location = New System.Drawing.Point(66, 150)
         Me.DESResult.Name = "DESResult"
+        Me.DESResult.ShowGenerateKey = False
         Me.DESResult.ShowLoadKey = False
         Me.DESResult.Size = New System.Drawing.Size(574, 28)
-        Me.DESResult.TabIndex = 10
+        Me.DESResult.TabIndex = 7
         '
         'cmdAND
         '
         Me.cmdAND.Location = New System.Drawing.Point(481, 98)
         Me.cmdAND.Name = "cmdAND"
         Me.cmdAND.Size = New System.Drawing.Size(93, 30)
-        Me.cmdAND.TabIndex = 9
+        Me.cmdAND.TabIndex = 6
         Me.cmdAND.Text = "AND"
         Me.cmdAND.UseVisualStyleBackColor = True
         '
@@ -207,7 +233,7 @@ Partial Class frmMain
         Me.cmdOR.Location = New System.Drawing.Point(382, 98)
         Me.cmdOR.Name = "cmdOR"
         Me.cmdOR.Size = New System.Drawing.Size(93, 30)
-        Me.cmdOR.TabIndex = 8
+        Me.cmdOR.TabIndex = 5
         Me.cmdOR.Text = "OR"
         Me.cmdOR.UseVisualStyleBackColor = True
         '
@@ -216,7 +242,7 @@ Partial Class frmMain
         Me.cmdXOR.Location = New System.Drawing.Point(283, 98)
         Me.cmdXOR.Name = "cmdXOR"
         Me.cmdXOR.Size = New System.Drawing.Size(93, 30)
-        Me.cmdXOR.TabIndex = 7
+        Me.cmdXOR.TabIndex = 4
         Me.cmdXOR.Text = "XOR"
         Me.cmdXOR.UseVisualStyleBackColor = True
         '
@@ -225,7 +251,7 @@ Partial Class frmMain
         Me.cmdDecrypt.Location = New System.Drawing.Point(184, 98)
         Me.cmdDecrypt.Name = "cmdDecrypt"
         Me.cmdDecrypt.Size = New System.Drawing.Size(93, 30)
-        Me.cmdDecrypt.TabIndex = 6
+        Me.cmdDecrypt.TabIndex = 3
         Me.cmdDecrypt.Text = "Decrypt"
         Me.cmdDecrypt.UseVisualStyleBackColor = True
         '
@@ -234,7 +260,7 @@ Partial Class frmMain
         Me.cmdEncrypt.Location = New System.Drawing.Point(85, 98)
         Me.cmdEncrypt.Name = "cmdEncrypt"
         Me.cmdEncrypt.Size = New System.Drawing.Size(93, 30)
-        Me.cmdEncrypt.TabIndex = 5
+        Me.cmdEncrypt.TabIndex = 2
         Me.cmdEncrypt.Text = "Encrypt"
         Me.cmdEncrypt.UseVisualStyleBackColor = True
         '
@@ -260,17 +286,19 @@ Partial Class frmMain
         '
         Me.DESHexKey.Location = New System.Drawing.Point(66, 40)
         Me.DESHexKey.Name = "DESHexKey"
+        Me.DESHexKey.ShowGenerateKey = False
         Me.DESHexKey.ShowLoadKey = False
         Me.DESHexKey.Size = New System.Drawing.Size(578, 28)
-        Me.DESHexKey.TabIndex = 2
+        Me.DESHexKey.TabIndex = 1
         '
         'DESHexData
         '
         Me.DESHexData.Location = New System.Drawing.Point(66, 6)
         Me.DESHexData.Name = "DESHexData"
+        Me.DESHexData.ShowGenerateKey = False
         Me.DESHexData.ShowLoadKey = False
         Me.DESHexData.Size = New System.Drawing.Size(578, 28)
-        Me.DESHexData.TabIndex = 1
+        Me.DESHexData.TabIndex = 0
         '
         'TabPage2
         '
@@ -278,17 +306,17 @@ Partial Class frmMain
         Me.TabPage2.Controls.Add(Me.cmdGetPIN)
         Me.TabPage2.Controls.Add(Me.cmdGetPINBlock)
         Me.TabPage2.Controls.Add(Me.Label13)
-        Me.TabPage2.Controls.Add(Me.txtPINKey)
         Me.TabPage2.Controls.Add(Me.cboPBFormat)
         Me.TabPage2.Controls.Add(Me.Label12)
-        Me.TabPage2.Controls.Add(Me.txtPadding)
         Me.TabPage2.Controls.Add(Me.Label11)
-        Me.TabPage2.Controls.Add(Me.txtAccount)
         Me.TabPage2.Controls.Add(Me.Label10)
-        Me.TabPage2.Controls.Add(Me.txtPINBlock)
         Me.TabPage2.Controls.Add(Me.Label9)
-        Me.TabPage2.Controls.Add(Me.txtPIN)
         Me.TabPage2.Controls.Add(Me.Label8)
+        Me.TabPage2.Controls.Add(Me.txtPINKey)
+        Me.TabPage2.Controls.Add(Me.txtPadding)
+        Me.TabPage2.Controls.Add(Me.txtAccount)
+        Me.TabPage2.Controls.Add(Me.txtPINBlock)
+        Me.TabPage2.Controls.Add(Me.txtPIN)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
@@ -311,7 +339,7 @@ Partial Class frmMain
         Me.cmdGetPIN.Location = New System.Drawing.Point(339, 182)
         Me.cmdGetPIN.Name = "cmdGetPIN"
         Me.cmdGetPIN.Size = New System.Drawing.Size(143, 30)
-        Me.cmdGetPIN.TabIndex = 18
+        Me.cmdGetPIN.TabIndex = 7
         Me.cmdGetPIN.Text = "Find PIN"
         Me.cmdGetPIN.UseVisualStyleBackColor = True
         '
@@ -320,7 +348,7 @@ Partial Class frmMain
         Me.cmdGetPINBlock.Location = New System.Drawing.Point(177, 182)
         Me.cmdGetPINBlock.Name = "cmdGetPINBlock"
         Me.cmdGetPINBlock.Size = New System.Drawing.Size(143, 30)
-        Me.cmdGetPINBlock.TabIndex = 17
+        Me.cmdGetPINBlock.TabIndex = 6
         Me.cmdGetPINBlock.Text = "Find PIN Block"
         Me.cmdGetPINBlock.UseVisualStyleBackColor = True
         '
@@ -333,14 +361,6 @@ Partial Class frmMain
         Me.Label13.TabIndex = 16
         Me.Label13.Text = "PIN Key:"
         '
-        'txtPINKey
-        '
-        Me.txtPINKey.Location = New System.Drawing.Point(68, 139)
-        Me.txtPINKey.Name = "txtPINKey"
-        Me.txtPINKey.ShowLoadKey = False
-        Me.txtPINKey.Size = New System.Drawing.Size(578, 28)
-        Me.txtPINKey.TabIndex = 15
-        '
         'cboPBFormat
         '
         Me.cboPBFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -349,7 +369,7 @@ Partial Class frmMain
         Me.cboPBFormat.Location = New System.Drawing.Point(284, 109)
         Me.cboPBFormat.Name = "cboPBFormat"
         Me.cboPBFormat.Size = New System.Drawing.Size(147, 21)
-        Me.cboPBFormat.TabIndex = 14
+        Me.cboPBFormat.TabIndex = 4
         '
         'Label12
         '
@@ -360,17 +380,6 @@ Partial Class frmMain
         Me.Label12.TabIndex = 13
         Me.Label12.Text = "PIN Block Format:"
         '
-        'txtPadding
-        '
-        Me.txtPadding.AcceptHex = False
-        Me.txtPadding.Enabled = False
-        Me.txtPadding.Location = New System.Drawing.Point(284, 75)
-        Me.txtPadding.MaxLength = 16
-        Me.txtPadding.Name = "txtPadding"
-        Me.txtPadding.Size = New System.Drawing.Size(147, 21)
-        Me.txtPadding.TabIndex = 12
-        Me.txtPadding.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
-        '
         'Label11
         '
         Me.Label11.AutoSize = True
@@ -379,17 +388,6 @@ Partial Class frmMain
         Me.Label11.Size = New System.Drawing.Size(49, 13)
         Me.Label11.TabIndex = 11
         Me.Label11.Text = "Padding:"
-        '
-        'txtAccount
-        '
-        Me.txtAccount.AcceptHex = False
-        Me.txtAccount.Enabled = False
-        Me.txtAccount.Location = New System.Drawing.Point(284, 42)
-        Me.txtAccount.MaxLength = 19
-        Me.txtAccount.Name = "txtAccount"
-        Me.txtAccount.Size = New System.Drawing.Size(147, 21)
-        Me.txtAccount.TabIndex = 10
-        Me.txtAccount.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         '
         'Label10
         '
@@ -400,16 +398,6 @@ Partial Class frmMain
         Me.Label10.TabIndex = 9
         Me.Label10.Text = "Account:"
         '
-        'txtPINBlock
-        '
-        Me.txtPINBlock.AcceptHex = True
-        Me.txtPINBlock.Location = New System.Drawing.Point(342, 11)
-        Me.txtPINBlock.MaxLength = 16
-        Me.txtPINBlock.Name = "txtPINBlock"
-        Me.txtPINBlock.Size = New System.Drawing.Size(232, 21)
-        Me.txtPINBlock.TabIndex = 8
-        Me.txtPINBlock.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
-        '
         'Label9
         '
         Me.Label9.AutoSize = True
@@ -418,16 +406,6 @@ Partial Class frmMain
         Me.Label9.Size = New System.Drawing.Size(55, 13)
         Me.Label9.TabIndex = 7
         Me.Label9.Text = "PIN Block:"
-        '
-        'txtPIN
-        '
-        Me.txtPIN.AcceptHex = False
-        Me.txtPIN.Location = New System.Drawing.Point(119, 11)
-        Me.txtPIN.MaxLength = 8
-        Me.txtPIN.Name = "txtPIN"
-        Me.txtPIN.Size = New System.Drawing.Size(147, 21)
-        Me.txtPIN.TabIndex = 6
-        Me.txtPIN.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         '
         'Label8
         '
@@ -438,8 +416,69 @@ Partial Class frmMain
         Me.Label8.TabIndex = 4
         Me.Label8.Text = "PIN:"
         '
+        'txtPINKey
+        '
+        Me.txtPINKey.Location = New System.Drawing.Point(68, 139)
+        Me.txtPINKey.Name = "txtPINKey"
+        Me.txtPINKey.ShowGenerateKey = False
+        Me.txtPINKey.ShowLoadKey = False
+        Me.txtPINKey.Size = New System.Drawing.Size(578, 28)
+        Me.txtPINKey.TabIndex = 5
+        '
+        'txtPadding
+        '
+        Me.txtPadding.AcceptHex = False
+        Me.txtPadding.Enabled = False
+        Me.txtPadding.Location = New System.Drawing.Point(284, 75)
+        Me.txtPadding.MaxLength = 16
+        Me.txtPadding.Name = "txtPadding"
+        Me.txtPadding.Size = New System.Drawing.Size(147, 21)
+        Me.txtPadding.TabIndex = 3
+        Me.txtPadding.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'txtAccount
+        '
+        Me.txtAccount.AcceptHex = False
+        Me.txtAccount.Enabled = False
+        Me.txtAccount.Location = New System.Drawing.Point(284, 42)
+        Me.txtAccount.MaxLength = 19
+        Me.txtAccount.Name = "txtAccount"
+        Me.txtAccount.Size = New System.Drawing.Size(147, 21)
+        Me.txtAccount.TabIndex = 2
+        Me.txtAccount.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'txtPINBlock
+        '
+        Me.txtPINBlock.AcceptHex = True
+        Me.txtPINBlock.Location = New System.Drawing.Point(342, 11)
+        Me.txtPINBlock.MaxLength = 16
+        Me.txtPINBlock.Name = "txtPINBlock"
+        Me.txtPINBlock.Size = New System.Drawing.Size(232, 21)
+        Me.txtPINBlock.TabIndex = 1
+        Me.txtPINBlock.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'txtPIN
+        '
+        Me.txtPIN.AcceptHex = False
+        Me.txtPIN.Location = New System.Drawing.Point(119, 11)
+        Me.txtPIN.MaxLength = 8
+        Me.txtPIN.Name = "txtPIN"
+        Me.txtPIN.Size = New System.Drawing.Size(147, 21)
+        Me.txtPIN.TabIndex = 0
+        Me.txtPIN.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.lblCVV)
+        Me.TabPage3.Controls.Add(Me.cmdGenerateCVV)
+        Me.TabPage3.Controls.Add(Me.Label22)
+        Me.TabPage3.Controls.Add(Me.txtCVVExpDate)
+        Me.TabPage3.Controls.Add(Me.Label19)
+        Me.TabPage3.Controls.Add(Me.Label20)
+        Me.TabPage3.Controls.Add(Me.Label21)
+        Me.TabPage3.Controls.Add(Me.txtCVKPair)
+        Me.TabPage3.Controls.Add(Me.txtCVVAccount)
+        Me.TabPage3.Controls.Add(Me.txtCVVSVC)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(659, 392)
@@ -449,12 +488,135 @@ Partial Class frmMain
         '
         'TabPage4
         '
+        Me.TabPage4.Controls.Add(Me.barPVVClashing)
+        Me.TabPage4.Controls.Add(Me.lblPVV)
+        Me.TabPage4.Controls.Add(Me.cmdFindOtherPINs)
+        Me.TabPage4.Controls.Add(Me.cmdGeneratePVV)
+        Me.TabPage4.Controls.Add(Me.Label18)
+        Me.TabPage4.Controls.Add(Me.cboPVKI)
+        Me.TabPage4.Controls.Add(Me.Label17)
+        Me.TabPage4.Controls.Add(Me.Label15)
+        Me.TabPage4.Controls.Add(Me.Label16)
+        Me.TabPage4.Controls.Add(Me.txtPVVPVK)
+        Me.TabPage4.Controls.Add(Me.txtPVVAccount)
+        Me.TabPage4.Controls.Add(Me.txtPVVPIN)
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Size = New System.Drawing.Size(659, 392)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Visa PVV"
         Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'barPVVClashing
+        '
+        Me.barPVVClashing.Location = New System.Drawing.Point(16, 361)
+        Me.barPVVClashing.Name = "barPVVClashing"
+        Me.barPVVClashing.Size = New System.Drawing.Size(630, 23)
+        Me.barPVVClashing.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.barPVVClashing.TabIndex = 22
+        Me.barPVVClashing.Visible = False
+        '
+        'lblPVV
+        '
+        Me.lblPVV.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(161, Byte))
+        Me.lblPVV.Location = New System.Drawing.Point(81, 167)
+        Me.lblPVV.Name = "lblPVV"
+        Me.lblPVV.Size = New System.Drawing.Size(497, 185)
+        Me.lblPVV.TabIndex = 21
+        Me.lblPVV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'cmdFindOtherPINs
+        '
+        Me.cmdFindOtherPINs.Location = New System.Drawing.Point(339, 134)
+        Me.cmdFindOtherPINs.Name = "cmdFindOtherPINs"
+        Me.cmdFindOtherPINs.Size = New System.Drawing.Size(143, 30)
+        Me.cmdFindOtherPINs.TabIndex = 5
+        Me.cmdFindOtherPINs.Text = "Find other PINs"
+        Me.cmdFindOtherPINs.UseVisualStyleBackColor = True
+        '
+        'cmdGeneratePVV
+        '
+        Me.cmdGeneratePVV.Location = New System.Drawing.Point(177, 134)
+        Me.cmdGeneratePVV.Name = "cmdGeneratePVV"
+        Me.cmdGeneratePVV.Size = New System.Drawing.Size(143, 30)
+        Me.cmdGeneratePVV.TabIndex = 4
+        Me.cmdGeneratePVV.Text = "Generate PVV"
+        Me.cmdGeneratePVV.UseVisualStyleBackColor = True
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(13, 108)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(50, 13)
+        Me.Label18.TabIndex = 18
+        Me.Label18.Text = "PVK Pair:"
+        '
+        'cboPVKI
+        '
+        Me.cboPVKI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboPVKI.FormattingEnabled = True
+        Me.cboPVKI.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6"})
+        Me.cboPVKI.Location = New System.Drawing.Point(285, 73)
+        Me.cboPVKI.Name = "cboPVKI"
+        Me.cboPVKI.Size = New System.Drawing.Size(147, 21)
+        Me.cboPVKI.TabIndex = 2
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(244, 76)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(33, 13)
+        Me.Label17.TabIndex = 15
+        Me.Label17.Text = "PVKI:"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(227, 48)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(50, 13)
+        Me.Label15.TabIndex = 13
+        Me.Label15.Text = "Account:"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(251, 21)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(28, 13)
+        Me.Label16.TabIndex = 11
+        Me.Label16.Text = "PIN:"
+        '
+        'txtPVVPVK
+        '
+        Me.txtPVVPVK.Location = New System.Drawing.Point(68, 100)
+        Me.txtPVVPVK.Name = "txtPVVPVK"
+        Me.txtPVVPVK.ShowGenerateKey = False
+        Me.txtPVVPVK.ShowLoadKey = False
+        Me.txtPVVPVK.Size = New System.Drawing.Size(578, 28)
+        Me.txtPVVPVK.TabIndex = 3
+        '
+        'txtPVVAccount
+        '
+        Me.txtPVVAccount.AcceptHex = False
+        Me.txtPVVAccount.Location = New System.Drawing.Point(285, 44)
+        Me.txtPVVAccount.MaxLength = 19
+        Me.txtPVVAccount.Name = "txtPVVAccount"
+        Me.txtPVVAccount.Size = New System.Drawing.Size(147, 21)
+        Me.txtPVVAccount.TabIndex = 1
+        Me.txtPVVAccount.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'txtPVVPIN
+        '
+        Me.txtPVVPIN.AcceptHex = False
+        Me.txtPVVPIN.Location = New System.Drawing.Point(285, 17)
+        Me.txtPVVPIN.MaxLength = 8
+        Me.txtPVVPIN.Name = "txtPVVPIN"
+        Me.txtPVVPIN.Size = New System.Drawing.Size(147, 21)
+        Me.txtPVVPIN.TabIndex = 0
+        Me.txtPVVPIN.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         '
         'TabPage6
         '
@@ -476,8 +638,8 @@ Partial Class frmMain
         Me.optPANWithoutCheckDigit.AutoSize = True
         Me.optPANWithoutCheckDigit.Location = New System.Drawing.Point(228, 65)
         Me.optPANWithoutCheckDigit.Name = "optPANWithoutCheckDigit"
-        Me.optPANWithoutCheckDigit.Size = New System.Drawing.Size(183, 17)
-        Me.optPANWithoutCheckDigit.TabIndex = 11
+        Me.optPANWithoutCheckDigit.Size = New System.Drawing.Size(179, 17)
+        Me.optPANWithoutCheckDigit.TabIndex = 2
         Me.optPANWithoutCheckDigit.Text = "PAN does not include check digit"
         Me.optPANWithoutCheckDigit.UseVisualStyleBackColor = True
         '
@@ -487,8 +649,8 @@ Partial Class frmMain
         Me.optPANWithCheckDigit.Checked = True
         Me.optPANWithCheckDigit.Location = New System.Drawing.Point(228, 42)
         Me.optPANWithCheckDigit.Name = "optPANWithCheckDigit"
-        Me.optPANWithCheckDigit.Size = New System.Drawing.Size(144, 17)
-        Me.optPANWithCheckDigit.TabIndex = 10
+        Me.optPANWithCheckDigit.Size = New System.Drawing.Size(139, 17)
+        Me.optPANWithCheckDigit.TabIndex = 1
         Me.optPANWithCheckDigit.TabStop = True
         Me.optPANWithCheckDigit.Text = "PAN includes check digit"
         Me.optPANWithCheckDigit.UseVisualStyleBackColor = True
@@ -507,7 +669,7 @@ Partial Class frmMain
         Me.cmdCheckDigit.Location = New System.Drawing.Point(283, 98)
         Me.cmdCheckDigit.Name = "cmdCheckDigit"
         Me.cmdCheckDigit.Size = New System.Drawing.Size(93, 30)
-        Me.cmdCheckDigit.TabIndex = 8
+        Me.cmdCheckDigit.TabIndex = 3
         Me.cmdCheckDigit.Text = "Check Digit"
         Me.cmdCheckDigit.UseVisualStyleBackColor = True
         '
@@ -527,7 +689,7 @@ Partial Class frmMain
         Me.txtPANtoCheck.MaxLength = 19
         Me.txtPANtoCheck.Name = "txtPANtoCheck"
         Me.txtPANtoCheck.Size = New System.Drawing.Size(262, 21)
-        Me.txtPANtoCheck.TabIndex = 5
+        Me.txtPANtoCheck.TabIndex = 0
         Me.txtPANtoCheck.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         '
         'TabPage5
@@ -553,16 +715,17 @@ Partial Class frmMain
         '
         Me.txtKeyValue.Location = New System.Drawing.Point(95, 260)
         Me.txtKeyValue.Name = "txtKeyValue"
+        Me.txtKeyValue.ShowGenerateKey = False
         Me.txtKeyValue.ShowLoadKey = False
         Me.txtKeyValue.Size = New System.Drawing.Size(539, 28)
-        Me.txtKeyValue.TabIndex = 10
+        Me.txtKeyValue.TabIndex = 2
         '
         'cmdClearAllKeys
         '
         Me.cmdClearAllKeys.Location = New System.Drawing.Point(381, 329)
         Me.cmdClearAllKeys.Name = "cmdClearAllKeys"
         Me.cmdClearAllKeys.Size = New System.Drawing.Size(92, 29)
-        Me.cmdClearAllKeys.TabIndex = 9
+        Me.cmdClearAllKeys.TabIndex = 6
         Me.cmdClearAllKeys.Text = "Clear all"
         Me.cmdClearAllKeys.UseVisualStyleBackColor = True
         '
@@ -571,7 +734,7 @@ Partial Class frmMain
         Me.cmdDeleteKey.Location = New System.Drawing.Point(283, 329)
         Me.cmdDeleteKey.Name = "cmdDeleteKey"
         Me.cmdDeleteKey.Size = New System.Drawing.Size(92, 29)
-        Me.cmdDeleteKey.TabIndex = 8
+        Me.cmdDeleteKey.TabIndex = 5
         Me.cmdDeleteKey.Text = "Delete"
         Me.cmdDeleteKey.UseVisualStyleBackColor = True
         '
@@ -580,7 +743,7 @@ Partial Class frmMain
         Me.cmdAddUpdateKey.Location = New System.Drawing.Point(185, 329)
         Me.cmdAddUpdateKey.Name = "cmdAddUpdateKey"
         Me.cmdAddUpdateKey.Size = New System.Drawing.Size(92, 29)
-        Me.cmdAddUpdateKey.TabIndex = 7
+        Me.cmdAddUpdateKey.TabIndex = 4
         Me.cmdAddUpdateKey.Text = "Add/Update"
         Me.cmdAddUpdateKey.UseVisualStyleBackColor = True
         '
@@ -589,7 +752,7 @@ Partial Class frmMain
         Me.txtKeyDescription.Location = New System.Drawing.Point(95, 294)
         Me.txtKeyDescription.Name = "txtKeyDescription"
         Me.txtKeyDescription.Size = New System.Drawing.Size(310, 21)
-        Me.txtKeyDescription.TabIndex = 6
+        Me.txtKeyDescription.TabIndex = 3
         '
         'Label6
         '
@@ -614,7 +777,7 @@ Partial Class frmMain
         Me.txtKeyName.Location = New System.Drawing.Point(95, 235)
         Me.txtKeyName.Name = "txtKeyName"
         Me.txtKeyName.Size = New System.Drawing.Size(310, 21)
-        Me.txtKeyName.TabIndex = 2
+        Me.txtKeyName.TabIndex = 1
         '
         'Label4
         '
@@ -682,7 +845,104 @@ Partial Class frmMain
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(172, 19)
         Me.Label14.TabIndex = 0
-        Me.Label14.Text = "EFT Calculator 0.2.0"
+        Me.Label14.Text = "EFT Calculator 0.3.0"
+        '
+        'BW
+        '
+        Me.BW.WorkerReportsProgress = True
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(13, 108)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(51, 13)
+        Me.Label19.TabIndex = 24
+        Me.Label19.Text = "CVK Pair:"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(227, 48)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(50, 13)
+        Me.Label20.TabIndex = 21
+        Me.Label20.Text = "Account:"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(205, 22)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(74, 13)
+        Me.Label21.TabIndex = 19
+        Me.Label21.Text = "Service Code:"
+        '
+        'txtCVKPair
+        '
+        Me.txtCVKPair.Location = New System.Drawing.Point(68, 100)
+        Me.txtCVKPair.Name = "txtCVKPair"
+        Me.txtCVKPair.ShowGenerateKey = False
+        Me.txtCVKPair.ShowLoadKey = False
+        Me.txtCVKPair.Size = New System.Drawing.Size(578, 28)
+        Me.txtCVKPair.TabIndex = 3
+        '
+        'txtCVVAccount
+        '
+        Me.txtCVVAccount.AcceptHex = False
+        Me.txtCVVAccount.Location = New System.Drawing.Point(285, 44)
+        Me.txtCVVAccount.MaxLength = 19
+        Me.txtCVVAccount.Name = "txtCVVAccount"
+        Me.txtCVVAccount.Size = New System.Drawing.Size(147, 21)
+        Me.txtCVVAccount.TabIndex = 1
+        Me.txtCVVAccount.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'txtCVVSVC
+        '
+        Me.txtCVVSVC.AcceptHex = False
+        Me.txtCVVSVC.Location = New System.Drawing.Point(285, 17)
+        Me.txtCVVSVC.MaxLength = 3
+        Me.txtCVVSVC.Name = "txtCVVSVC"
+        Me.txtCVVSVC.Size = New System.Drawing.Size(147, 21)
+        Me.txtCVVSVC.TabIndex = 0
+        Me.txtCVVSVC.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(193, 77)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(84, 13)
+        Me.Label22.TabIndex = 25
+        Me.Label22.Text = "Expiration date:"
+        '
+        'txtCVVExpDate
+        '
+        Me.txtCVVExpDate.AcceptHex = False
+        Me.txtCVVExpDate.Location = New System.Drawing.Point(285, 73)
+        Me.txtCVVExpDate.MaxLength = 4
+        Me.txtCVVExpDate.Name = "txtCVVExpDate"
+        Me.txtCVVExpDate.Size = New System.Drawing.Size(147, 21)
+        Me.txtCVVExpDate.TabIndex = 2
+        Me.txtCVVExpDate.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'lblCVV
+        '
+        Me.lblCVV.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(161, Byte))
+        Me.lblCVV.Location = New System.Drawing.Point(81, 177)
+        Me.lblCVV.Name = "lblCVV"
+        Me.lblCVV.Size = New System.Drawing.Size(497, 54)
+        Me.lblCVV.TabIndex = 28
+        Me.lblCVV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'cmdGenerateCVV
+        '
+        Me.cmdGenerateCVV.Location = New System.Drawing.Point(258, 134)
+        Me.cmdGenerateCVV.Name = "cmdGenerateCVV"
+        Me.cmdGenerateCVV.Size = New System.Drawing.Size(143, 30)
+        Me.cmdGenerateCVV.TabIndex = 4
+        Me.cmdGenerateCVV.Text = "Generate CVV"
+        Me.cmdGenerateCVV.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -702,6 +962,10 @@ Partial Class frmMain
         Me.TabPage1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
@@ -771,4 +1035,27 @@ Partial Class frmMain
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
     Friend WithEvents lnkHome As System.Windows.Forms.LinkLabel
     Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents cboPVKI As System.Windows.Forms.ComboBox
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents txtPVVAccount As EFTCalculator.HexTextBox
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents txtPVVPIN As EFTCalculator.HexTextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents txtPVVPVK As EFTCalculator.HexTripleBox
+    Friend WithEvents cmdFindOtherPINs As System.Windows.Forms.Button
+    Friend WithEvents cmdGeneratePVV As System.Windows.Forms.Button
+    Friend WithEvents lblPVV As System.Windows.Forms.Label
+    Friend WithEvents barPVVClashing As System.Windows.Forms.ProgressBar
+    Friend WithEvents BW As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents txtCVKPair As EFTCalculator.HexTripleBox
+    Friend WithEvents txtCVVAccount As EFTCalculator.HexTextBox
+    Friend WithEvents txtCVVSVC As EFTCalculator.HexTextBox
+    Friend WithEvents Label22 As System.Windows.Forms.Label
+    Friend WithEvents txtCVVExpDate As EFTCalculator.HexTextBox
+    Friend WithEvents lblCVV As System.Windows.Forms.Label
+    Friend WithEvents cmdGenerateCVV As System.Windows.Forms.Button
 End Class

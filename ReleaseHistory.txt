@@ -1,6 +1,11 @@
 ﻿EFTCalculator Release History
 =============================
 
+2011/01/17: Version 0.3.0 beta released.
+----------------------------------------
+* Added PVV calculation and PVV clashing demo.
+* Added CVV calculation.
+
 2011/01/15: Version 0.2.0 beta released.
 ----------------------------------------
 * Added key management capabilities.

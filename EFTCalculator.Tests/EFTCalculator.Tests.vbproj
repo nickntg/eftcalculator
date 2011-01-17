@@ -82,6 +82,7 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="ParityUnitTests.vb" />
     <Compile Include="PINBlockUnitTests.vb" />
+    <Compile Include="PVVUnitTests.vb" />
     <Compile Include="StorageUnitTests.vb" />
     <Compile Include="TripleDESUnitTests.vb" />
   </ItemGroup>
