@@ -306,7 +306,7 @@ Public Class Utility
     ''' <remarks></remarks>
     Public Shared Function GeneratePVV(ByVal AccountNumber As String, ByVal PVKI As String, ByVal PIN As String, ByVal PVKPair As HexKey) As String
 
-        Dim stage1 As String = GetProperAccountDigits(AccountNumber).Substring(0, 11) + PVKI + PIN.Substring(0, 4)
+        Dim stage1 As String = GetProperAccountDigits(AccountNumber).Substring(1, 11) + PVKI + PIN.Substring(0, 4)
         Dim stage2 As String = TripleDES.TripleDESEncrypt(PVKPair, stage1)
         Dim PVV As String = "", i As Integer
 
