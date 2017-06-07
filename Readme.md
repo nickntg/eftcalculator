@@ -1,7 +1,7 @@
 **Project Description**
 EFT Calculator is an application that performs common cryptographic operations used in electronic funds transfer applications.
 
-![Sponsored by NDepend](Home_NDependLogo_PoweredBy.PNG|http://www.NDepend.com)
+[![](Home_NDependLogo_PoweredBy.PNG)](http://www.NDepend.com)
 
 The current version supports the following operations:
 
